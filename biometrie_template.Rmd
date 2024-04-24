@@ -99,7 +99,7 @@ laborant_ID,subject_ID,handlengte,handbreedte,sexe
 Om data vanuit een tekstbestand in te lezen kan je dit codeblok gebruiken, aannemend dat je data er exact zo uitzien als in bovenstaande voorbeeld:
 
 ```{r demo-data-inlees}
-data_file <- "/home/floris/OneDrive_FLORIS/Hanze_Bioinformatica/Jaar_1/Overige vakken/Kwartaal_4/De wetenschappelijke cyclus/Verzamelde_hand_data4.csv"
+data_file <- "Verzamelde_hand_data.csv"
 
 #data format: laborant_ID,subject_ID,handlengte,handbreedte,sexe
 biometric_data <- read.table(file = data_file,
@@ -237,12 +237,50 @@ Beantwoord deze vragen:
 
 ### Bronnen van variatie
 
-ONDERZOEK BRONNEN VAN VARIATIE
-BESPREEK DIT KORT
+De variatie tussen de handafmetingen van mannen en vrouwen noemen we biologische variatie. Alles in de biologie kent variatie, door milieu of door genetica. Echter, als je in een experiment dingen meet doet een persoon dat en gebruik je meestal instrumenten. Dat noemen we experimentele variatie. Twee meetlatten kunnen net anders gefabriceerd worden, en een onderlinge -maar dan reproduceerbare afwijking hebben ten opzichte van elkaar. Aan de andere kant kan het zijn dat twee laboranten experimenten net op een verschillende manier uitvoeren. Deze laatste bron van variatie gaan we hier onderzoeken.
+
+Onderstaande boxplot geeft de meetwaarden voor handlengte uitgesplitst op laborant_ID.
+
+```{r}
+ggplot(data = biometric_data,
+       mapping = aes(x = laborant_ID, y = handlengte, fill = laborant_ID)) +
+    geom_boxplot(colour = "black") +
+    theme_minimal()
+```
+
+```{r}
+ggplot(data = biometric_data,
+       mapping = aes(x = sexe, y = handlengte)) +
+    geom_boxplot(fill = "darkgreen") +
+    facet_wrap(. ~ laborant_ID) +
+    ylab("hand lengte (mm)") +
+    theme_linedraw()
+```
+
 
 ### De hypothese aannemen?
 
 VOER RELEVANTE STATISTISCHE TESTS UIT
+```{r}
+shapiro.test(biometric_data$ratio)
+```
+De p-waarde is niet kleiner dan 0.05 dus is er geen sprake van een significant verschil van de normale verdeling. 
+```{r}
+female_ratios <- subset(biometric_data, 
+                        subset = sexe == "v", 
+                        select = ratio, 
+                        drop = T) # drop = T forces ro a vector
+male_ratios <- subset(biometric_data, 
+                        subset = sexe == "m", 
+                        select = ratio, 
+                        drop = T)
+t.test(female_ratios, male_ratios)
+```
+Omdat de p-waarde weer hoger is dan 0.05 kan de nulhypothese niet verworpen worden. 
+
+```{r}
+wilcox.test(female_ratios, male_ratios)
+```
 
 
 ## Reflectie op het experiment
