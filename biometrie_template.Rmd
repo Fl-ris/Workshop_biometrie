@@ -1,6 +1,6 @@
 ---
 title: "Biometrie onderzoek"
-authors: "Floris Menninga>"
+authors: "Floris Menninga, studentnummer: 464715 (In groepje met: Iris Ineke en Jasper Jonker)"
 date: "`r Sys.Date()`"
 output:
   html_document:
@@ -22,18 +22,18 @@ getwd()
 
 ## Inleiding
 
-GEEF EEN HEEL KORTE INLEINDING VAN JE ONDERZOEK
+Voor dit onderzoek is de breedte en lengte van de handen van 40 mensen, mannen en vrouwen opgemeten.
+
+Het doel is om vast te stellen of er een verschil is tussen de grootte van de hand van mannen en vrouwen.
+
+De onderzoeksvraag is dan: Is er bij de mens een sexe verschil in de lengte/breedte ratio van de hand?
+
+De nulhypothese is: Er is bij de mens geen sexe verschil in de lengte/breedte ratio van de hand
 
 :::info
 Het staat je vrij een ander simpel te meten biometrisch kenmerk te onderzoeken. Voorwaarde is wel dat je twee aspecten meet (bv lichaamslengte en hoofdomtrek) en hun relatie onderzoekt, en ook dat je verschillende groepen onderzoekt (man/vrouw, jong/oud etc.). Ten slotte moeten verschillende studenten het meetwerk afwisselen en ook dat moet vastgelegd worden.
 :::
 
-
-
-:::attention
-GEEF HIER JE ONDERZOEKSVRAAG
-
-:::
 
 
 :::attention
@@ -52,10 +52,6 @@ Er is bij de mens geen sexeverschil in de lengte/breedte ratio van de hand.
 ### Ontwerp van het experiment
 
 Van 40 proefpersonen, gelijk verdeeld over mannen en vrouwen en willekeurig geselecteerd in en rond het schoolgebouw, zal de sexe gevraagd worden en vervolgens de handlengte en -breedte gemeten worden.
-
-### Ontwerp het protocol
-
-VUL HIER ONDER HET PROTOCOL AAN OF PAS DEZE AAN NAAR JOUW OPZET.
 
 :::protocol
 #### Protocol voor meting handlengte en handbreedte
@@ -126,13 +122,15 @@ head(biometric_data)
 
 
 ```{r}
-mean(biometric_data[biometric_data$sexe == "v" , "handlengte"]) # vrouwen
-
+gemiddelde_vrouwen <- mean(biometric_data[biometric_data$sexe == "v" , "handlengte"]) # vrouwen
+cat(gemiddelde_vrouwen, "cm gemiddelde handlengte vrouwen")
 ```
 
 
+
 ```{r}
-mean(biometric_data[biometric_data$sexe == "m" , "handlengte"]) # mannen
+gemiddelde_mannen <- mean(biometric_data[biometric_data$sexe == "m" , "handlengte"]) # mannen
+cat(gemiddelde_mannen, "cm gemiddelde handlengte mannen")
 
 ```
 
@@ -211,27 +209,27 @@ ggplot(data = hist_data,
     theme_minimal()
 ```
 
-1. Wat gebeurt er met de vorm van de verdeling als n groter wordt?
-Het begint meer op een normaalcurve te lijken.
-
-2. Wat gebeurt er met de spreiding van de data (x-as) als n groter wordt, en kan je dat verklaren?
-Omdat het een normaalverdeling is bijft de spreiding het zelfde.
-
-3. Waarom is bij zelfde instellingen voor n en breaks de uitkomst toch verschillend?
-
-4. Welke minimale n geeft het meeste kans om een echte normaalverdeling te zien?
-5. Wat voor bijzonders is er aan de hand met het breaks argument? Geeft de documentatie daar een verklaring voor?
 
 
 :::attention
 **Dit _experiment_ met de argumenten van `rnorm()` en `hist()` moet je opnemen in je eigen RMarkdown.**  
 Beantwoord deze vragen:
 
-1. Wat gebeurt er met de vorm van de verdeling als `n` groter wordt?
-2. Wat gebeurt er met de spreiding van de data (x-as) als `n` groter wordt, en kan je dat verklaren?
-3. Waarom is bij zelfde instellingen voor `n` en `breaks` de uitkomst toch verschillend?
-4. Welke minimale `n` geeft het meeste kans om een echte normaalverdeling te zien?
-5. Wat voor bijzonders is er aan de hand met het `breaks` argument? Geeft de documentatie daar een verklaring voor?
+1. Wat gebeurt er met de vorm van de verdeling als `n` groter wordt? <br>
+Het begint meer op een normaalcurve te lijken. 
+
+2. Wat gebeurt er met de spreiding van de data (x-as) als `n` groter wordt, en kan je dat verklaren? <br>
+De spreiding wordt groter omdat er meer waarden zijn is de kans ook groter dat er hogere of lagere waarden zijn dan wanneer het er maar een paar zijn. 
+
+3. Waarom is bij zelfde instellingen voor `n` en `breaks` de uitkomst toch verschillend? <br>
+
+4. Welke minimale `n` geeft het meeste kans om een echte normaalverdeling te zien? <br>
+Bij n = 1000.
+
+5. Wat voor bijzonders is er aan de hand met het `breaks` argument? Geeft de documentatie daar een verklaring voor? <br>
+Als met "breaks" bins bedoeld wordt: hiermee wordt het histogram in staven verdeeld, hoe hoger het bins nummer, hoe meer staven. <br>
+Wanneer er geen "bins" argument mee wordt gegeven kiest R zelf met behulp van een algorithme (ook door de gebruiker te kiezen) hoeveel bins er gemaakt moeten worden. 
+
 :::
 
 
@@ -289,15 +287,21 @@ wilcox.test(female_ratios, male_ratios)
 Bespreek in je groep de volgende vragen en voeg de antwoorden toe aan je uitgewerkte onderzoeksdocument.  
 
 1. Zijn de metingen tussen de verschillende meters ook (significant) verschillend? Zo ja, waardoor zou je de verschillen kunnen verklaren?
+Twee van de andere groepjes hebben samengewerkt, daarom waren hun resultaten exact het zelfde. 
+Een ander groepje had veel variatie tussen hun twee meters, dit was aan het histogram te zien waarop alle groepjes vergeleken waren. 
+
 
 2. Onderzoek de verschillen tussen mannen en vrouwen met betrekking tot hand lengte, handbreedte en de ratio.
+Volgens de Shapiro-Wilk test is de data in de vorm van een normaal verdeling (p-waarde van 0.1075) Met de Welch Two Sample t-test is vast gesteld dat er geen significant verschil is tussen de afmetingen van mannen en vrouwen. (p-waarde van 0.8508) De nulhypothese kan dus niet verworpen worden, dit betekent dat er geen significant verschil waargenomen geworden is tussen de handgrootte van mannen en vrouwen
 
 3. Zou je het protocol aanpassen na deze ervaring, of was hij voldoende duidelijk en reproduceerbaar?
+Er zijn een paar aanpassingen die het protocol minder dubbelzinnig kunnen maken zoals: duidelijk opgeven wat voor meetapparaat gebruikt moet worden en wat voor meeteenheden gebruikt moeten worden (cm of mm).
+
 :::
 
 
 :::attention
 #### Wat je moet inleveren
-Voor de verwerking en analyse van je eigen data maak je gebruik van het aangeleverde template RMarkdown document. Daarin doorloop je dezelfde onderzoek stappen als hieronder, maar dan met je eigen data. Aan het einde van de dag gaat dat document, in originele en "geknitte" vorm, samen met je databestand, in een git repo die is opgezet volgens voorschift in de cursushandleiding. De link hiernaar toe gaat in je portfolio op eJournal. Let op dat je _alle_ stappen hebt doorlopen voordat je inlevert. Gebruik ook de RStudio spellingscontrole!  
+Voor de verwerking en analyse van je eigen data maak je gebruik van het aangeleverde template RMarkdown document. Daarin doorloop je dezelfde onderzoek stappen als hieronder, maar dan met je eigen data. Aan het einde van de dag gaat dat document, in originele en "geknitte" vorm, samen met je databestand, in een git repo die is opgezet volgens voorschrift in de cursushandleiding. De link hiernaar toe gaat in je portfolio op eJournal. Let op dat je _alle_ stappen hebt doorlopen voordat je inlevert. Gebruik ook de RStudio spellingscontrole!  
 Vergeet niet jullie namen en studentnummers bovenaan de markdown te zetten!
 :::

@@ -25,4 +25,4 @@ Ga door totdat van ten minste 40 proefpersonen de gegevens zijn verzameld.
 ## **Resulaat:**  ##
 Volgens de Shapiro-Wilk test is de data in de vorm van een normaal verdeling (p-waarde van 0.1075)
 Met de Welch Two Sample t-test is vast gesteld dat er geen significant verschil is tussen de afmetingen van mannen en vrouwen. (p-waarde van 0.8508)
-De nulhypothese kan dus niet verworpen worden, dit betekent dat er geen significant verschil waargenomen geworden is tussen de handgrootte van mannen en vrouwen. 
+De nulhypothese kan dus niet verworpen worden, dit betekent dat er geen significant verschil waargenomen geworden is in de lengte/breedte ratio van de hand.
